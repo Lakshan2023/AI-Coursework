@@ -2,8 +2,11 @@ from AstarSearchImplementor import AstarSearchImplementor
 from DepthFirstSearchImplementor import DepthFirstSearchImplementor
 from Maze import Maze
 
-maze = Maze()
-dfsSearch = DepthFirstSearchImplementor(maze)
-print("\n\n")
-AstarSearch = AstarSearchImplementor(maze)
+AStarMaze = []
+originalMaze = Maze()
+dfsSearch = DepthFirstSearchImplementor(originalMaze)
+dfsSearch.DFSSearch()
 
+AstarSearch = AstarSearchImplementor(originalMaze)
+print("\n\n")
+AstarSearch.AStarSearch()

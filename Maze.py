@@ -44,5 +44,3 @@ class Maze:
                 if self.mazeNodes[Y_Position][X_Position][3] is None:
                     self.mazeNodes[Y_Position][X_Position][3] = "Barrier"
                     break
-
-

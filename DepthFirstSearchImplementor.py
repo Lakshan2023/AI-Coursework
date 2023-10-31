@@ -1,4 +1,3 @@
-from Maze import Maze
 from FrontierStack import FrontierStack
 
 
@@ -10,11 +9,15 @@ class DepthFirstSearchImplementor:
     def __init__(self, maze):
         self.maze = maze
         self.Stack = FrontierStack()
+
+    def DFSSearch(self):
         self.Stack.addNode(self.maze.mazeNodes[self.maze.startPosition[1]][self.maze.startPosition[0]])
         self.GoalNode = self.maze.mazeNodes[self.maze.goalPosition[1]][self.maze.goalPosition[0]]
         self.traverseNodes()
         print(self.visited)
-        self.calculateStatOfTravers()
+        self.printAllVisitedNodeList()
+        self.calculateTime()
+        self.displayFinalPath()
 
     def traverseNodes(self):
         while not self.Stack.isMazeStackEmpty():
@@ -114,11 +117,3 @@ class DepthFirstSearchImplementor:
     def calculateTime(self):
         spentTime = (len(self.fullVisitedList) - 1) * 1
         print("Spent time = {} minutes".format(spentTime))
-
-    def calculateStatOfTravers(self):
-        self.printAllVisitedNodeList()
-        self.calculateTime()
-        self.displayFinalPath()
-
-
-
