@@ -3,7 +3,7 @@ import random
 
 class Maze:
     # Data structure that stores maze node related data
-    mazeNodes = [[[y + x * 6, x, y, None, 0] for x in range(6)] for y in range(6)]
+    mazeNodes = [[[y + x * 6, x, y, None, 0, 0] for x in range(6)] for y in range(6)]
     startPosition = []
     goalPosition = []
 

@@ -7,6 +7,6 @@ originalMaze = Maze()
 dfsSearch = DepthFirstSearchImplementor(originalMaze)
 dfsSearch.DFSSearch()
 
-AstarSearch = AstarSearchImplementor(originalMaze)
 print("\n\n")
+AstarSearch = AstarSearchImplementor(originalMaze)
 AstarSearch.AStarSearch()

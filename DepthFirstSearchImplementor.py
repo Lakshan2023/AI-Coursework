@@ -9,10 +9,10 @@ class DepthFirstSearchImplementor:
     def __init__(self, maze):
         self.maze = maze
         self.Stack = FrontierStack()
+        self.GoalNode = self.maze.mazeNodes[self.maze.goalPosition[1]][self.maze.goalPosition[0]]
 
     def DFSSearch(self):
         self.Stack.addNode(self.maze.mazeNodes[self.maze.startPosition[1]][self.maze.startPosition[0]])
-        self.GoalNode = self.maze.mazeNodes[self.maze.goalPosition[1]][self.maze.goalPosition[0]]
         self.traverseNodes()
         print(self.visited)
         self.printAllVisitedNodeList()
@@ -21,6 +21,7 @@ class DepthFirstSearchImplementor:
 
     def traverseNodes(self):
         while not self.Stack.isMazeStackEmpty():
+            print(self.Stack.mazeStack)
             popNode = self.Stack.removeNode()
             self.fullVisitedList.append(popNode[0])
             if self.maze.mazeNodes[popNode[2]][popNode[1]][3] not in ["Start", "Goal", "Blocked"]:
@@ -28,7 +29,8 @@ class DepthFirstSearchImplementor:
             if self.stateExistCondition(popNode):
                 self.visited.append(popNode)
                 return self.visited
-            self.visited.append(popNode)
+            if popNode not in self.visited:
+                self.visited.append(popNode)
             self.getNeighbourNodes(popNode[1], popNode[2], "Traverse")
 
         print("There is no solution !!!")
@@ -64,17 +66,13 @@ class DepthFirstSearchImplementor:
             previousNode = self.visited[index - 1]
             if poppedNode[3] == "Visited" and poppedNode != self.GoalNode:
                 self.maze.mazeNodes[poppedNode[2]][poppedNode[1]][3] = "Blocked"
-                self.visited[index][3] = "Blocked"
                 self.fullVisitedList.append(poppedNode[0])
-                previousLength = self.getNeighbourNodes(previousNode[1], previousNode[2], "Backtrack")
+                previousNodeNeighbours = self.getNeighbourNodes(previousNode[1], previousNode[2], "Backtrack")
+                filteredPreviousNodeNeighbours = [node for node in previousNodeNeighbours if node[3] in ["Start", "Goal","Start"]]
 
-                previousLength = [node for node in previousLength if node[3] not in ["Visited", "Start"]]
-
-                if len(previousLength) != 0:
-                    for value in previousLength:
-                        if value not in self.visited:
-                            self.Stack.addNode(value)
-                    self.fullVisitedList.append(previousNode[0])
+                if len(filteredPreviousNodeNeighbours) != 0:
+                    print(previousNode, "fp", filteredPreviousNodeNeighbours)
+                    self.Stack.addNode(filteredPreviousNodeNeighbours[-1])
                     break
 
     def checkAllNeighboursVisited(self, neighbor_list):
@@ -115,5 +113,5 @@ class DepthFirstSearchImplementor:
         print("final Path :", self.finalPath)
 
     def calculateTime(self):
-        spentTime = (len(self.fullVisitedList) - 1) * 1
+        spentTime = (len(self.visited) - 1) * 1
         print("Spent time = {} minutes".format(spentTime))
